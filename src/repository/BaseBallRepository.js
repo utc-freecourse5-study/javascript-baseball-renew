@@ -10,6 +10,7 @@ class BaseBallRepository {
 
   create() {
     this.update(MODEL_KEY.randomNumber, makeRandom());
+    this.update(MODEL_KEY.trial, 0);
   }
 
   read(modelKey) {
