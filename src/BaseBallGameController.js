@@ -52,6 +52,7 @@ class BaseBallGameController {
     if (!HandleValidation.checkValidation(Validation.reTryOrQuit, input)) {
       return this.requestGameCommand();
     }
+
     if (input === CONFIRM.reStart) {
       this.#baseBallGame.retry();
       return this.requestBaseBallNumber();
