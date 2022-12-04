@@ -24,6 +24,14 @@ class BaseBallGame {
     return strike;
   }
 
+  checkBall(userInputNumbers, computerNumbers) {
+    let ball = 0;
+    [...userInputNumbers].forEach((number, index) => {
+      if (computerNumbers.includes(number) && !(number === computerNumbers[index])) ball++;
+    });
+    return ball;
+  }
+
   guess() {}
   retry() {}
 }
