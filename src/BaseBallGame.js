@@ -1,7 +1,7 @@
 const { Random } = require('@woowacourse/mission-utils');
 
 class BaseBallGame {
-  #winningNumbers;
+  #computerNumbers;
 
   createWinningNubmers() {
     const winningNumbers = new Set();
@@ -9,6 +9,10 @@ class BaseBallGame {
       winningNumbers.add(Random.pickNumberInRange(1, 9));
     }
     return [...winningNumbers];
+  }
+
+  assignComputerNumbers() {
+    this.#computerNumbers = this.createWinningNubmers();
   }
 
   guess() {}
