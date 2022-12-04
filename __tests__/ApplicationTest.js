@@ -23,18 +23,32 @@ const getLogSpy = () => {
   return logSpy;
 };
 
+const getOutput = (logSpy) => {
+  return [...logSpy.mock.calls].join('');
+};
+
+const expectLogContains = (received, logs) => {
+  logs.forEach((log) => {
+    expect(received).toEqual(expect.stringContaining(log));
+  });
+};
+
+const runException = (inputs) => {
+  mockQuestions(inputs);
+  const logSpy = getLogSpy();
+  const app = new App();
+
+  app.play();
+
+  expectLogContains(getOutput(logSpy), ['[ERROR]']);
+};
+
 describe('숫자 야구 게임', () => {
   test('게임 종료 후 재시작', () => {
+    const logSpy = getLogSpy();
+
     const randoms = [1, 3, 5, 5, 8, 9];
     const answers = ['246', '135', '1', '597', '589', '2'];
-    const logSpy = getLogSpy();
-    const messages = [
-      '낫싱',
-      '3스트라이크',
-      '1볼 1스트라이크',
-      '3스트라이크',
-      '게임 종료',
-    ];
 
     mockRandoms(randoms);
     mockQuestions(answers);
@@ -42,21 +56,21 @@ describe('숫자 야구 게임', () => {
     const app = new App();
     app.play();
 
-    messages.forEach((output) => {
-      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
-    });
+    const log = getOutput(logSpy);
+
+    const messages = [
+      '낫싱',
+      '3스트라이크',
+      '시도한 횟수: 2번',
+      '1볼 1스트라이크',
+      '3스트라이크',
+      '시도한 횟수: 2번',
+    ];
+
+    expectLogContains(log, messages);
   });
 
   test('예외 테스트', () => {
-    const randoms = [1, 3, 5];
-    const answers = ['1234'];
-
-    mockRandoms(randoms);
-    mockQuestions(answers);
-
-    expect(() => {
-      const app = new App();
-      app.play();
-    }).toThrow();
+    runException(['a']);
   });
 });
