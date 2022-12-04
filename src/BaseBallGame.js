@@ -1,3 +1,5 @@
+const HandleValidation = require('./utils/HandleValidation');
+const Validation = require('./utils/Validation');
 const InputView = require('./view/InputView');
 const OutputView = require('./view/OutputView');
 
@@ -12,8 +14,10 @@ class BaseBallGame {
   }
 
   test(number) {
-    console.log(number);
-    return this.requestBaseBallNumber();
+    if (!HandleValidation.checkValidation(Validation.inputNumber, number)) {
+      return this.requestBaseBallNumber();
+    }
+    console.log('no error');
   }
 }
 
