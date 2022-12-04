@@ -20,8 +20,8 @@ class BaseballController {
     this.#service.retry();
   }
 
-  guess() {
-    return this.#service.guess();
+  guess(input) {
+    return this.#service.guess(input);
   }
 
   exit() {
