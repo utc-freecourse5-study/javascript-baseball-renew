@@ -44,3 +44,20 @@ describe('checkStrike() 기능 테스트', () => {
     expect(strike).toEqual(1);
   });
 });
+
+describe('checkBall() 기능 테스트', () => {
+  test('user 입력과 computer의 입력을 넘겼을때 스트라이크가 제대로 계산되는지 확인', () => {
+    const baseBallGame = new BaseBallGame();
+    const userInputNumbers = '123';
+    const computerNumbers = '317';
+    const ball = baseBallGame.checkBall(userInputNumbers, computerNumbers);
+    expect(ball).toEqual(2);
+  });
+  test.failing('스트라이크의 개수가 잘못됐을때 실패하는지 확인', () => {
+    const baseBallGame = new BaseBallGame();
+    const userInputNumbers = '123';
+    const computerNumbers = '346';
+    const ball = baseBallGame.checkBall(userInputNumbers, computerNumbers);
+    expect(ball).toEqual(2);
+  });
+});
