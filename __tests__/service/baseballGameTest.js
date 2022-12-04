@@ -19,10 +19,17 @@ describe('BaseBallGame 테스트', () => {
 
     baseBallGame.retry();
 
-    expect(baseBallGame.guess(inputs[0])).toEqual({ ball: 1, strike: 1 });
-    expect(baseBallGame.guess(inputs[1])).toEqual({ ball: 1, strike: 0 });
-    expect(baseBallGame.guess(inputs[2])).toEqual({ ball: 0, strike: 0 });
-    expect(baseBallGame.guess(inputs[3])).toEqual({ ball: 0, strike: 2 });
+    baseBallGame.inputNumber(inputs[0]);
+    expect(baseBallGame.guess()).toEqual({ ball: 1, strike: 1 });
+
+    baseBallGame.inputNumber(inputs[1]);
+    expect(baseBallGame.guess()).toEqual({ ball: 1, strike: 0 });
+
+    baseBallGame.inputNumber(inputs[2]);
+    expect(baseBallGame.guess()).toEqual({ ball: 0, strike: 0 });
+
+    baseBallGame.inputNumber(inputs[3]);
+    expect(baseBallGame.guess()).toEqual({ ball: 0, strike: 2 });
 
     expect(baseBallGame.getTrial()).toEqual(4);
   });
