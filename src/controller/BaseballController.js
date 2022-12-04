@@ -16,15 +16,19 @@ class BaseballController {
     this.#service = new BaseBallGame();
   }
 
-  start() {
+  inputRandom() {
     this.#service.retry();
   }
 
-  guess(input) {
-    return this.#service.guess(input);
+  inputNumber(input) {
+    this.#service.inputNumber(input);
   }
 
-  exit() {
+  outputGuess() {
+    return this.#service.guess();
+  }
+
+  outputTrial() {
     return this.#service.getTrial();
   }
 }
