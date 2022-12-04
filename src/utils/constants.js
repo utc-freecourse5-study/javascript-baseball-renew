@@ -5,7 +5,7 @@ const REGEX = Object.freeze({
 
 const ERROR_MESSAGE = Object.freeze({
   gameCommand: '[ERROR] 재시작/종료 명령어는 각각 1, 2이어야만 합니다.',
-  baseballInput: '[ERROR] [ERROR]: 서로 다른 세자리 숫자를 입력해주세요',
+  baseballInput: '[ERROR]: 서로 다른 세자리 숫자를 입력해주세요',
 });
 
 const MODEL_KEY = Object.freeze({

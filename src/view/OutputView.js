@@ -1,22 +1,25 @@
 const { Console } = require('@woowacourse/mission-utils');
-const controller = require('../controller/BaseballController');
 const BaseBallConvert = require('./Convert');
 
 const { BASEBALL_TEXT } = require('../utils/constants');
 
 const OutputView = {
-  printGuessResult() {
+  printGuessResult(controllerInstance) {
     const convert = new BaseBallConvert({
-      guessData: controller.guess(),
+      controller: controllerInstance,
     });
 
-    Console.print(convert.getResult());
+    Console.print(convert.getGuessResult());
     Console.print('');
   },
 
-  printFinalResult() {
+  printFinalResult(controllerInstance) {
+    const convert = new BaseBallConvert({
+      controller: controllerInstance,
+    });
+
     Console.print(BASEBALL_TEXT.final);
-    Console.print(`시도한 횟수: ${controller.exit()}번`);
+    Console.print(convert.getTrialResult());
     Console.print('');
   },
 };
