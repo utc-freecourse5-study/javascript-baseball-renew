@@ -25,5 +25,6 @@ describe('BaseBallStart 테스트', () => {
     baseballStart.storeData();
 
     expect(repo.read(MODEL_KEY.randomNumber)).toEqual([1, 3, 4]);
+    expect(repo.read(MODEL_KEY.trial)).toEqual(0);
   });
 });
