@@ -18,11 +18,44 @@ class BaseBallGame {
     }
   }
 
-  guess(number) {}
+  guess(number) {
+    const strike = this.#countStrike(number);
+    const ball = this.#countBall(number);
+    return { strike, ball };
+  }
 
-  getAttempts() {}
+  #countStrike(number) {
+    let totalStrike = 0;
+    totalStrike = this.#computerRandomNumber.reduce((count, comCurNum, index) => {
+      const oneLetterOfInputNumber = Number(number[index]);
+      if (oneLetterOfInputNumber === comCurNum) return count + 1;
+      return count;
+    }, 0);
+    return totalStrike;
+  }
 
-  retry() {}
+  #countBall(number) {
+    let totalBall = 0;
+    totalBall = this.#computerRandomNumber.reduce((count, comCurNum, index) => {
+      const oneLetterOfInputNumber = Number(number[index]);
+      if (
+        this.#computerRandomNumber.includes(oneLetterOfInputNumber) &&
+        comCurNum !== oneLetterOfInputNumber
+      ) {
+        return count + 1;
+      }
+      return count;
+    }, 0);
+    return totalBall;
+  }
+
+  getAttempts() {
+    return this.#attempts;
+  }
+
+  retry() {
+    this.#attempts += 1;
+  }
 }
 
 module.exports = BaseBallGame;
