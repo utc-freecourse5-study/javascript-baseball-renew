@@ -27,28 +27,23 @@ class BaseBallGame {
   }
 
   #countStrike(number) {
-    let totalStrike = 0;
-    totalStrike = this.#computerRandomNumber.reduce((count, comCurNum, index) => {
+    return this.#computerRandomNumber.reduce((count, comCurNum, index) => {
       const oneLetterOfInputNumber = Number(number[index]);
       if (oneLetterOfInputNumber === comCurNum) return count + 1;
       return count;
     }, 0);
-    return totalStrike;
   }
 
   #countBall(number) {
-    let totalBall = 0;
-    totalBall = this.#computerRandomNumber.reduce((count, comCurNum, index) => {
-      const oneLetterOfInputNumber = Number(number[index]);
+    return this.#computerRandomNumber.reduce((count, comCurNum, index) => {
       if (
-        this.#computerRandomNumber.includes(oneLetterOfInputNumber) &&
-        comCurNum !== oneLetterOfInputNumber
+        this.#computerRandomNumber.includes(Number(number[index])) &&
+        comCurNum !== Number(number[index])
       ) {
         return count + 1;
       }
       return count;
     }, 0);
-    return totalBall;
   }
 
   getAttempts() {
