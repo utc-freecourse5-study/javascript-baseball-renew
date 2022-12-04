@@ -1,4 +1,4 @@
-const { Random } = require('@woowacourse/mission-utils');
+const { Random, Console } = require('@woowacourse/mission-utils');
 
 class BaseBallGame {
   #computerRandomNumber;
@@ -53,8 +53,18 @@ class BaseBallGame {
     return this.#attempts;
   }
 
+  addAttempts() {
+    return (this.#attempts += 1);
+  }
+
   retry() {
-    this.#attempts += 1;
+    this.#computerRandomNumber = [];
+    this.#attempts = 1;
+    this.makeRandomNumber();
+  }
+
+  quit() {
+    Console.close();
   }
 }
 

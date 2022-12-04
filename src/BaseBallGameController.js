@@ -15,14 +15,14 @@ class BaseBallGameController {
   }
 
   requestBaseBallNumber() {
-    InputView.readBaseBallNumbers(this.judgeStrikeAndBall.bind(this));
+    InputView.readBaseBallNumbers(this.checkInputNumber.bind(this));
   }
 
   checkInputNumber(number) {
     if (!HandleValidation.checkValidation(Validation.inputNumber, number)) {
       return this.requestBaseBallNumber();
     }
-    this.judgeBallAndStrike();
+    this.judgeBallAndStrike(number);
   }
 
   judgeBallAndStrike(number) {
@@ -36,10 +36,26 @@ class BaseBallGameController {
     if (guess.ball === 0 && guess.strike === 3) {
       const attemps = this.#baseBallGame.getAttempts();
       OutputView.printFinalResult(attemps);
+      this.requestGameCommand();
     }
 
-    this.#baseBallGame.retry();
+    this.#baseBallGame.addAttempts();
     this.requestBaseBallNumber();
+  }
+
+  requestGameCommand() {
+    InputView.readGameCommand(this.reTryOrQuit.bind(this));
+  }
+
+  reTryOrQuit(input) {
+    if (!HandleValidation.checkValidation(Validation.reTryOrQuit, input)) {
+      return this.requestGameCommand();
+    }
+    if (input === '1') {
+      this.#baseBallGame.retry();
+      return this.requestBaseBallNumber();
+    }
+    return this.#baseBallGame.quit();
   }
 }
 

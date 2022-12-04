@@ -12,5 +12,11 @@ const Validation = {
     Validation.naturalNumbersFromOneToNine(number);
     Validation.duplicateNumber(number);
   },
+
+  reTryOrQuit(input) {
+    if (input === '1') return;
+    if (input === '2') return;
+    throw '[ERROR]: 1 또는 2를 입력해주세요';
+  },
 };
 module.exports = Validation;
