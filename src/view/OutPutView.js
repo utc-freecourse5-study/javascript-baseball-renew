@@ -30,7 +30,7 @@ const OutputView = {
 
   printFinalResult(attemps) {
     Console.print('3개의 숫자를 모두 맞히셨습니다! 게임 종료\n');
-    Console.print(`시도한 횟수: ${attemps}`);
+    Console.print(`시도한 횟수: ${attemps}번`);
   },
 
   printErrorMessage(error) {
