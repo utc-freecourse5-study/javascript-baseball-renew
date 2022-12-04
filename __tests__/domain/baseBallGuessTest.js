@@ -13,12 +13,15 @@ const mockRandoms = (numbers) => {
 
 describe('BaseBallGuess 테스트', () => {
   test('숫자 입력 시 시도횟수 증가, 제대로 스트라이크 볼 판별하는 지 확인', () => {
-    const input = '123';
+    const input = [1, 2, 3];
     const randoms = [1, 3, 3, 3, 4];
+
     mockRandoms(randoms);
 
     const repo = new BaseBallRepository();
+
     repo.create();
+    repo.update(MODEL_KEY.inputNumber, input);
 
     const baseballGuess = new BaseballGuess({
       input: input,
@@ -26,6 +29,5 @@ describe('BaseBallGuess 테스트', () => {
     });
 
     expect(baseballGuess.getOutput()).toEqual({ ball: 1, strike: 1 });
-    expect(repo.read(MODEL_KEY.trial)).toEqual(1);
   });
 });
