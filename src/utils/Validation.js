@@ -1,11 +1,13 @@
+const { CONFIRM, ERROR_MESSEGE } = require('./constants');
+
 const Validation = {
   naturalNumbersFromOneToNine(number) {
     const regExp = new RegExp('^[1-9]+$');
-    if (!regExp.test(number)) throw '[ERROR]: 1에서 9까지의 자연수를 입력해주세요';
+    if (!regExp.test(number)) throw ERROR_MESSEGE.naturalNumbersFromOneToNine;
   },
 
   duplicateNumber(number) {
-    if (new Set([...number]).size !== 3) throw '[ERROR]: 서로 다른 세자리 숫자를 입력해주세요';
+    if (new Set([...number]).size !== 3) throw ERROR_MESSEGE.duplicateNumber;
   },
 
   inputNumber(number) {
@@ -14,9 +16,9 @@ const Validation = {
   },
 
   reTryOrQuit(input) {
-    if (input === '1') return;
-    if (input === '2') return;
-    throw '[ERROR]: 1 또는 2를 입력해주세요';
+    if (input === CONFIRM.reStart) return;
+    if (input === CONFIRM.exit) return;
+    throw ERROR_MESSEGE.reTryOrQuit;
   },
 };
 module.exports = Validation;

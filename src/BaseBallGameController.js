@@ -1,4 +1,5 @@
 const BaseBallGame = require('./BaseBallGame');
+const { CONFIRM } = require('./utils/constants');
 const HandleValidation = require('./utils/HandleValidation');
 const Validation = require('./utils/Validation');
 const InputView = require('./view/InputView');
@@ -51,7 +52,7 @@ class BaseBallGameController {
     if (!HandleValidation.checkValidation(Validation.reTryOrQuit, input)) {
       return this.requestGameCommand();
     }
-    if (input === '1') {
+    if (input === CONFIRM.reStart) {
       this.#baseBallGame.retry();
       return this.requestBaseBallNumber();
     }

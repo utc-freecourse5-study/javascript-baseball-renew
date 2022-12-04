@@ -1,4 +1,5 @@
 const { Random, Console } = require('@woowacourse/mission-utils');
+const { COMPUTER_NUMBER_RANGE } = require('./utils/constants');
 
 class BaseBallGame {
   #computerRandomNumber;
@@ -10,11 +11,12 @@ class BaseBallGame {
   }
 
   makeRandomNumber() {
-    while (this.#computerRandomNumber.length < 3) {
-      const number = Random.pickNumberInRange(1, 9);
-      if (!this.#computerRandomNumber.includes(number)) {
-        this.#computerRandomNumber.push(number);
-      }
+    while (this.#computerRandomNumber.length < COMPUTER_NUMBER_RANGE.length) {
+      const number = Random.pickNumberInRange(
+        COMPUTER_NUMBER_RANGE.minimum,
+        COMPUTER_NUMBER_RANGE.maximum
+      );
+      if (!this.#computerRandomNumber.includes(number)) this.#computerRandomNumber.push(number);
     }
   }
 
