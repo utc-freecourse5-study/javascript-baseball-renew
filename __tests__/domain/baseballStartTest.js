@@ -1,3 +1,5 @@
+const MissionUtils = require('@woowacourse/mission-utils');
+
 const BaseBallRepository = require('../../src/repository/BaseBallRepository');
 const BaseballStart = require('../../src/service/domain/BaseballStart');
 const { MODEL_KEY } = require('../../src/utils/constants');
