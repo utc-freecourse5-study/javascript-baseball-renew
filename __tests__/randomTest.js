@@ -1,3 +1,5 @@
+const MissionUtils = require('@woowacourse/mission-utils');
+
 const { makeRandom } = require('../src/utils/random');
 
 const mockRandoms = (numbers) => {
