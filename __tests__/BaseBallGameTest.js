@@ -27,3 +27,20 @@ describe('야구 게임 정답인 컴퓨터 랜덤 숫자 생성 테스트', () 
     expect(duplicatedNumberCheck.size).toEqual(2);
   });
 });
+
+describe('checkStrike() 기능 테스트', () => {
+  test('user 입력과 computer의 입력을 넘겼을때 스트라이크가 제대로 계산되는지 확인', () => {
+    const baseBallGame = new BaseBallGame();
+    const userInputNumbers = '123';
+    const computerNumbers = '326';
+    const strike = baseBallGame.checkStrike(userInputNumbers, computerNumbers);
+    expect(strike).toEqual(1);
+  });
+  test.failing('스트라이크의 개수가 잘못됐을때 실패하는지 확인', () => {
+    const baseBallGame = new BaseBallGame();
+    const userInputNumbers = '123';
+    const computerNumbers = '316';
+    const strike = baseBallGame.checkStrike(userInputNumbers, computerNumbers);
+    expect(strike).toEqual(1);
+  });
+});
