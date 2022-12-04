@@ -1,24 +1,28 @@
-const HandleValidation = require('./utils/HandleValidation');
-const Validation = require('./utils/Validation');
-const InputView = require('./view/InputView');
-const OutputView = require('./view/OutputView');
+const { Random } = require('@woowacourse/mission-utils');
 
 class BaseBallGame {
-  start() {
-    OutputView.printStart();
-    this.requestBaseBallNumber();
+  #computerRandomNumber;
+  #attempts;
+
+  constructor() {
+    this.#computerRandomNumber = [];
+    this.#attempts = 1;
   }
 
-  requestBaseBallNumber() {
-    InputView.readBaseBallGameNumber(this.test.bind(this));
-  }
-
-  test(number) {
-    if (!HandleValidation.checkValidation(Validation.inputNumber, number)) {
-      return this.requestBaseBallNumber();
+  makeRandomNumber() {
+    while (this.#computerRandomNumber.length < 3) {
+      const number = Random.pickNumberInRange(1, 9);
+      if (!this.#computerRandomNumber.includes(number)) {
+        this.#computerRandomNumber.push(number);
+      }
     }
-    console.log('no error');
   }
+
+  guess(number) {}
+
+  getAttempts() {}
+
+  retry() {}
 }
 
 module.exports = BaseBallGame;
