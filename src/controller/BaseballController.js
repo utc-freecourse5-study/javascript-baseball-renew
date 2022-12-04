@@ -1,9 +1,18 @@
 const BaseBallGame = require('../service/BaseBallGame');
+const { ERROR_MESSAGE } = require('../utils/constants');
+
+let instance = null;
 
 class BaseballController {
   #service;
 
   constructor() {
+    if (instance) {
+      throw new Error(ERROR_MESSAGE.singleton);
+    }
+
+    instance = this;
+
     this.#service = new BaseBallGame();
   }
 
@@ -20,4 +29,4 @@ class BaseballController {
   }
 }
 
-module.exports = BaseballController;
+module.exports = Object.freeze(new BaseballController());
