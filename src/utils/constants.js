@@ -8,7 +8,13 @@ const ERROR_MESSAGE = Object.freeze({
   baseballInput: '[ERROR] [ERROR]: 서로 다른 세자리 숫자를 입력해주세요',
 });
 
+const MODEL_KEY = Object.freeze({
+  randomNumber: 'BASEBALL_RANDOM_NUMBER',
+  trial: 'BASEBALL_TRY_COUNT',
+});
+
 module.exports = {
   REGEX,
   ERROR_MESSAGE,
+  MODEL_KEY,
 };
