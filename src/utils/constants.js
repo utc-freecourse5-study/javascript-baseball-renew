@@ -9,8 +9,9 @@ const ERROR_MESSAGE = Object.freeze({
 });
 
 const MODEL_KEY = Object.freeze({
-  randomNumber: 'BASEBALL_RANDOM_NUMBER',
   trial: 'BASEBALL_TRY_COUNT',
+  randomNumber: 'BASEBALL_RANDOM_NUMBER',
+  inputNumber: 'BASEBALL_INPUT_NUMBER',
 });
 
 const BASEBALL_TEXT = Object.freeze({
