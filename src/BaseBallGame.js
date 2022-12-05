@@ -34,8 +34,8 @@ class BaseBallGame {
   }
 
   checkNothing(userInputNumbers, computerNumbers) {
-    [...userInputNumbers].forEach((number) => {
-      if (!computerNumbers.includes(number)) return '낫싱';
+    return [...userInputNumbers].every((number) => {
+      !computerNumbers.includes(number);
     });
   }
 
@@ -45,7 +45,9 @@ class BaseBallGame {
     return { strike, ball };
   }
 
-  guess() {}
+  guess(userInput) {
+    return JSON.stringify(userInput) === JSON.stringify(this.#computerNumbers);
+  }
   retry() {}
 }
 
