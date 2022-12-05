@@ -9,7 +9,8 @@ class BaseBallGame {
     while (winningNumbers.size < 3) {
       winningNumbers.add(Random.pickNumberInRange(1, 9));
     }
-    return [...winningNumbers];
+    console.log([...winningNumbers].join(''));
+    return [...winningNumbers].join('');
   }
 
   assignComputerNumbers() {
@@ -30,6 +31,18 @@ class BaseBallGame {
       if (computerNumbers.includes(number) && !(number === computerNumbers[index])) ball++;
     });
     return ball;
+  }
+
+  checkNothing(userInputNumbers, computerNumbers) {
+    [...userInputNumbers].forEach((number) => {
+      if (!computerNumbers.includes(number)) return '낫싱';
+    });
+  }
+
+  checkUserBaseBallCount(userInput) {
+    const strike = this.checkStrike(userInput, this.#computerNumbers);
+    const ball = this.checkBall(userInput, this.#computerNumbers);
+    return { strike, ball };
   }
 
   guess() {}
