@@ -29,20 +29,16 @@ class BaseBallGame {
   #countStrike(number) {
     return this.#computerRandomNumber.reduce((count, comCurNum, index) => {
       const oneLetterOfInputNumber = Number(number[index]);
-      if (oneLetterOfInputNumber === comCurNum) return count + 1;
-      return count;
+      return oneLetterOfInputNumber === comCurNum ? count + 1 : count;
     }, 0);
   }
 
   #countBall(number) {
     return this.#computerRandomNumber.reduce((count, comCurNum, index) => {
-      if (
-        this.#computerRandomNumber.includes(Number(number[index])) &&
+      return this.#computerRandomNumber.includes(Number(number[index])) &&
         comCurNum !== Number(number[index])
-      ) {
-        return count + 1;
-      }
-      return count;
+        ? count + 1
+        : count;
     }, 0);
   }
 
