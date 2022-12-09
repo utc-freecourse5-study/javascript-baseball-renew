@@ -1,9 +1,5 @@
-const { Console } = require('@woowacourse/mission-utils');
-const exceptionHandler = require('./ExceptionHandler');
-const BaseBallGame = require('./BaseBallGame');
-const { InputView } = require('./InputView');
-const { OutputView } = require('./OutputView');
-const { Validation } = require('./Validation');
+const exceptionHandler = require('./utils/ExceptionHandler');
+const BaseBallGame = require('./controller/BaseBallGame');
 
 class App {
   constructor() {
@@ -11,28 +7,7 @@ class App {
   }
 
   play() {
-    this.baseBallGameStart();
-  }
-
-  baseBallGameStart() {
-    OutputView.printGameStartMessage();
-    this.baseBallGame.assignComputerNumbers();
-    this.requestNumbersOfUser();
-  }
-
-  requestNumbersOfUser() {
-    InputView.readBaseBallNumbers((userInput) => {
-      exceptionHandler(
-        () => this.checkBaseBallCountOfUser(userInput),
-        () => this.requestNumbersOfUser()
-      );
-    });
-  }
-
-  checkBaseBallCountOfUser(userInput) {
-    Validation.userInputOfGameNumbers(userInput);
-    const count = this.baseBallGame.checkUserBaseBallCount(userInput);
-    OutputView.printBaseBallCount(count);
+    this.baseBallGame.start();
   }
 }
 
