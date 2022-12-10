@@ -21,7 +21,8 @@ class BaseBallGameController {
 
   checkInputNumber(number) {
     if (!HandleValidation.checkValidation(Validation.inputNumber, number)) {
-      return this.requestBaseBallNumber();
+      this.requestBaseBallNumber();
+      return;
     }
     this.judgeBallAndStrike(number);
   }
@@ -50,14 +51,16 @@ class BaseBallGameController {
 
   reTryOrQuit(input) {
     if (!HandleValidation.checkValidation(Validation.reTryOrQuit, input)) {
-      return this.requestGameCommand();
+      this.requestGameCommand();
+      return;
     }
 
     if (input === CONFIRM.reStart) {
       this.#baseBallGame.retry();
-      return this.requestBaseBallNumber();
+      this.requestBaseBallNumber();
+    } else {
+      this.#baseBallGame.quit();
     }
-    return this.#baseBallGame.quit();
   }
 }
 
