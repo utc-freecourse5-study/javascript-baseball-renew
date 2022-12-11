@@ -1,5 +1,5 @@
 const MissionUtils = require("@woowacourse/mission-utils");
-const NumberMaker = require("./NumberMaker");
+const ComputerNumber = require("./ComputerNumber");
 const Validator = require("./Validator");
 const InputView = require("./view/InputView");
 const OutputView = require("./view/OutputView");
@@ -13,7 +13,7 @@ class App {
   }
 
   play() {
-    this.#computerNumbers = NumberMaker.makeRandomNumber();
+    this.#computerNumbers = new ComputerNumber();
     this.#tryCount = 0;
     this.requestBaseBallNumber();
   }
@@ -29,50 +29,6 @@ class App {
     });
   }
 
-  toArray(number) {
-    return number.split("").map((i) => Number(i));
-  }
-
-  checkNumber(number) {
-    const { strikeCount, ballCount } = this.getStrikeAndBall(this.#computerNumbers, number);
-    OutputView.printGuessResult(this.toString(strikeCount, ballCount));
-    if (strikeCount === 3) {
-      this.end();
-      return;
-    }
-    this.requestBaseBallNumber();
-  }
-
-  getStrikeCount(computerNumber, userNumber) {
-    return computerNumber.filter((number, index) => number === userNumber[index]).length;
-  }
-
-  getBallCount(computerNumber, userNumber) {
-    return computerNumber.filter((number, index) => userNumber.includes(number) && number !== userNumber[index]).length;
-  }
-
-  getStrikeAndBall(computerNumber, userNumber) {
-    const strikeCount = this.getStrikeCount(computerNumber, userNumber);
-    const ballCount = this.getBallCount(computerNumber, userNumber);
-
-    return { strikeCount: strikeCount, ballCount: ballCount };
-  }
-
-  toString(strike, ball) {
-    if (strike === 0 && ball === 0) return "낫싱";
-
-    let output = "";
-    if (ball > 0) output += ball + "볼 ";
-    if (strike > 0) output += strike + "스트라이크";
-    return output.trim();
-  }
-
-  end() {
-    OutputView.printEnding();
-    OutputView.printFinalResult(this.#tryCount);
-    this.requestCommand();
-  }
-
   requestCommand() {
     InputView.readGameCommand((command) => {
       if (!this.tryValidate(Validator.validateCommand, command)) {
@@ -82,6 +38,24 @@ class App {
       if (command === "1") this.play();
       if (command === "2") MissionUtils.Console.close();
     });
+  }
+
+  checkNumber(number) {
+    OutputView.printGuessResult(this.toString(number));
+    if (this.#computerNumbers.isOut(number)) {
+      this.end();
+    }
+    this.requestBaseBallNumber();
+  }
+
+  end() {
+    OutputView.printEnding();
+    OutputView.printFinalResult(this.#tryCount);
+    this.requestCommand();
+  }
+
+  toArray(number) {
+    return number.split("").map((i) => Number(i));
   }
 
   tryValidate(validate, input) {
