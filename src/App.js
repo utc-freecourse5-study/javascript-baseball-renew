@@ -26,7 +26,15 @@ class App {
     });
   }
 
-  checkNumber(number) {}
+  checkNumber(number) {
+    const { strikeCount, ballCount } = this.getStrikeAndBall(this.#computerNumbers, number);
+    OutputView.printGuessResult(this.toString(strikeCount, ballCount));
+    if (strikeCount === 3) {
+      this.end();
+      return;
+    }
+    this.requestBaseBallNumber();
+  }
 
   getStrikeCount(computerNumber, userNumber) {
     return computerNumber.filter((number, index) => number === userNumber[index]).length;
