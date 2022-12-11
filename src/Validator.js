@@ -9,7 +9,7 @@ const Validator = {
   },
 
   validateCommand(input) {
-    if (input !== "1" || input !== "2") {
+    if (input !== "1" && input !== "2") {
       throw new Error("[ERROR] 명령어는 1 혹은 2만 입력해주세요.");
     }
   },
