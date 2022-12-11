@@ -20,9 +20,12 @@ class App {
 
   requestBaseBallNumber() {
     InputView.readBaseBallNumbers((number) => {
-      this.tryValidate(Validator.validateNumber, number, this.requestBaseBallNumber);
+      if (!this.tryValidate(Validator.validateNumber, number)) {
+        this.requestBaseBallNumber();
+        return;
+      }
       this.#tryCount++;
-      this.checkNumber(number);
+      this.checkNumber(number.split("").map((i) => Number(i)));
     });
   }
 
@@ -54,9 +57,9 @@ class App {
   toString(strike, ball) {
     if (strike === 0 && ball === 0) return "낫싱";
 
-    const output = "";
-    if (ball.length > 0) output += ball + "볼 ";
-    if (strike.length > 0) output += strike + "스트라이크";
+    let output = "";
+    if (ball > 0) output += ball + "볼 ";
+    if (strike > 0) output += strike + "스트라이크";
     return output.trim();
   }
 
@@ -68,24 +71,27 @@ class App {
 
   requestCommand() {
     InputView.readGameCommand((command) => {
-      this.tryValidate(Validator.validateCommand, command, this.requestCommand);
-      if (command === "1") {
-        this.play();
+      if (!this.tryValidate(Validator.validateCommand, command)) {
+        this.requestCommand();
+        return;
       }
-      if (command === "2") {
-        MissionUtils.Console.close();
-      }
+      if (command === "1") this.play();
+      if (command === "2") MissionUtils.Console.close();
     });
   }
 
-  tryValidate(validate, input, readLine) {
+  tryValidate(validate, input) {
     try {
       validate(input);
+      return true;
     } catch (error) {
       OutputView.printErrorMessage(error);
-      readLine();
+      return false;
     }
   }
 }
+
+const app = new App();
+app.play();
 
 module.exports = App;
