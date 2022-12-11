@@ -9,7 +9,7 @@ class App {
   #computerNumbers;
 
   constructor() {
-    this.#tryCount = 1;
+    this.#tryCount = 0;
     OutputView.printOpening();
   }
 
@@ -21,12 +21,12 @@ class App {
   requestBaseBallNumber() {
     InputView.readBaseBallNumbers((number) => {
       this.tryValidate(Validator.validateNumber, number, this.requestBaseBallNumber);
+      this.#tryCount++;
+      this.checkNumber(number);
     });
   }
 
-  checkNumber(number) {
-    const { strikeCount, ballCount } = this.getStrikeAndBall(this.#computerNumbers, userNumber);
-  }
+  checkNumber(number) {}
 
   getStrikeCount(computerNumber, userNumber) {
     return computerNumber.filter((number, index) => number === userNumber[index]).length;
@@ -43,10 +43,18 @@ class App {
     return { strikeCount: strikeCount, ballCount: ballCount };
   }
 
-  toString(strike, ball) {}
+  toString(strike, ball) {
+    if (strike === 0 && ball === 0) return "낫싱";
+
+    const output = "";
+    if (ball.length > 0) output += ball + "볼 ";
+    if (strike.length > 0) output += strike + "스트라이크";
+    return output.trim();
+  }
 
   end() {
     OutputView.printEnding();
+    OutputView.printFinalResult(this.#tryCount);
     this.requestCommand();
   }
 
