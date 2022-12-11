@@ -1,10 +1,17 @@
+const MissionUtils = require("@woowacourse/mission-utils");
 const NumberMaker = require("./NumberMaker");
 const Validator = require("./Validator");
 const InputView = require("./view/InputView");
 const OutputView = require("./view/OutputView");
 
 class App {
+  #tryCount;
   #computerNumbers;
+
+  constructor() {
+    this.#tryCount = 1;
+    OutputView.printOpening();
+  }
 
   play() {
     this.#computerNumbers = NumberMaker.makeRandomNumber();
@@ -34,6 +41,25 @@ class App {
     const ballCount = this.getBallCount(computerNumber, userNumber);
 
     return { strikeCount: strikeCount, ballCount: ballCount };
+  }
+
+  toString(strike, ball) {}
+
+  end() {
+    OutputView.printEnding();
+    this.requestCommand();
+  }
+
+  requestCommand() {
+    InputView.readGameCommand((command) => {
+      this.tryValidate(Validator.validateCommand, command, this.requestCommand);
+      if (command === "1") {
+        this.play();
+      }
+      if (command === "2") {
+        MissionUtils.Console.close();
+      }
+    });
   }
 
   tryValidate(validate, input, readLine) {
