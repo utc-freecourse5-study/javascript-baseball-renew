@@ -9,12 +9,12 @@ class App {
   #computerNumbers;
 
   constructor() {
-    this.#tryCount = 0;
     OutputView.printOpening();
   }
 
   play() {
     this.#computerNumbers = NumberMaker.makeRandomNumber();
+    this.#tryCount = 0;
     this.requestBaseBallNumber();
   }
 
