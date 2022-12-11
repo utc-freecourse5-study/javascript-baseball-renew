@@ -9,6 +9,10 @@ const OutputView = {
     MissionUtils.Console.print("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
   },
 
+  printErrorMessage(error) {
+    MissionUtils.Console.print(error.message);
+  },
+
   printGuessResult(result) {
     MissionUtils.Console.print(result);
   },
