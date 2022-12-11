@@ -25,8 +25,12 @@ class App {
         return;
       }
       this.#tryCount++;
-      this.checkNumber(number.split("").map((i) => Number(i)));
+      this.checkNumber(this.toArray(number));
     });
+  }
+
+  toArray(number) {
+    return number.split("").map((i) => Number(i));
   }
 
   checkNumber(number) {
