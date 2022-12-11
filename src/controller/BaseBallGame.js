@@ -31,12 +31,16 @@ class BaseBallGame {
 
   checkUserCount(userInput) {
     Validation.userInputOfGameNumbers(userInput);
-    const checkedUserCount = this.baseBallGameSystem.checkUserBaseBallCount(userInput);
-    OutputView.printBaseBallCount(checkedUserCount);
-    this.checkGameStatus(checkedUserCount);
+    const { strike, ball } = this.baseBallGameSystem.checkUserBaseBallCount(userInput);
+    this.requestViewForPrint(strike, ball);
+    this.checkGameStatus(strike, ball);
   }
 
-  checkGameStatus({ strike }) {
+  requestViewForPrint(strike, ball) {
+    OutputView.printBaseBallCount(strike, ball);
+  }
+
+  checkGameStatus(strike, ball) {
     this.baseBallGameSystem.guess(strike)
       ? this.userWinBaseBallGame()
       : this.requestNumbersOfUser();
@@ -61,7 +65,9 @@ class BaseBallGame {
   }
 
   retry() {
-    Console.close();
+    this.computerNumberSetting();
+    this.requestNumbersOfUser();
+    this.baseBallGameSystem.retry();
   }
 
   quit() {
