@@ -20,28 +20,26 @@ class App {
 
   requestBaseBallNumber() {
     InputView.readBaseBallNumbers((number) => {
-      if (!this.tryValidate(Validator.validateNumber, number)) {
-        this.requestBaseBallNumber();
-        return;
-      }
-      this.#tryCount++;
-      this.checkNumber(this.toArray(number));
+      this.tryValidate(() => {
+        Validator.validateNumber(number);
+        this.#tryCount++;
+        this.checkNumber(this.toArray(number));
+      }, this.requestBaseBallNumber.bind(this));
     });
   }
 
   requestCommand() {
     InputView.readGameCommand((command) => {
-      if (!this.tryValidate(Validator.validateCommand, command)) {
-        this.requestCommand();
-        return;
-      }
-      if (command === "1") this.play();
-      if (command === "2") MissionUtils.Console.close();
+      this.tryValidate(() => {
+        Validator.validateCommand(command);
+        if (command === "1") this.play();
+        if (command === "2") MissionUtils.Console.close();
+      }, this.requestCommand.bind(this));
     });
   }
 
   checkNumber(number) {
-    OutputView.printGuessResult(this.toString(number));
+    OutputView.printGuessResult(this.#computerNumbers.toString(number));
     if (this.#computerNumbers.isOut(number)) {
       this.end();
     }
@@ -58,13 +56,12 @@ class App {
     return number.split("").map((i) => Number(i));
   }
 
-  tryValidate(validate, input) {
+  tryValidate(callback, request) {
     try {
-      validate(input);
-      return true;
+      callback();
     } catch (error) {
       OutputView.printErrorMessage(error);
-      return false;
+      request();
     }
   }
 }
