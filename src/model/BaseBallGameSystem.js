@@ -1,48 +1,19 @@
-const { Random } = require('@woowacourse/mission-utils');
+const { OutputView } = require('../view/OutputView');
+const { BaseBallGameChecker } = require('./BaseBallGameChecker');
+const { RandomNumbersCreator } = require('./RandomNumbersCreator');
 
 class BaseBallGameSystem {
   #computerNumbers;
   tryCount = 0;
 
-  createWinningNubmers() {
-    const winningNumbers = new Set();
-    while (winningNumbers.size < 3) {
-      winningNumbers.add(Random.pickNumberInRange(1, 9));
-    }
-    console.log([...winningNumbers]);
-    return [...winningNumbers].join('');
-  }
-
   assignComputerNumbers() {
-    this.#computerNumbers = this.createWinningNubmers();
-  }
-
-  checkStrike(userInputNumbers, computerNumbers) {
-    let strike = 0;
-    [...userInputNumbers].forEach((number, index) => {
-      if (number === computerNumbers[index]) strike++;
-    });
-    return strike;
-  }
-
-  checkBall(userInputNumbers, computerNumbers) {
-    let ball = 0;
-    [...userInputNumbers].forEach((number, index) => {
-      if (computerNumbers.includes(number) && !(number === computerNumbers[index])) ball++;
-    });
-    return ball;
-  }
-
-  checkNothing(userInputNumbers, computerNumbers) {
-    return [...userInputNumbers].every((number) => {
-      return !computerNumbers.includes(number);
-    });
+    this.#computerNumbers = RandomNumbersCreator.notDuplicated(3);
   }
 
   checkUserBaseBallCount(userInput) {
     this.tryCount += 1;
-    const strike = this.checkStrike(userInput, this.#computerNumbers);
-    const ball = this.checkBall(userInput, this.#computerNumbers);
+    const strike = BaseBallGameChecker.strike(userInput, this.#computerNumbers);
+    const ball = BaseBallGameChecker.ball(userInput, this.#computerNumbers);
     return { strike, ball };
   }
 
@@ -59,8 +30,7 @@ class BaseBallGameSystem {
   }
 
   retry() {
-    this.tryCount = 1;
-    this.assignComputerNumbers();
+    this.tryCount = 0;
   }
 }
 
