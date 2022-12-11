@@ -17,6 +17,25 @@ class App {
     });
   }
 
+  checkNumber(number) {
+    const { strikeCount, ballCount } = this.getStrikeAndBall(this.#computerNumbers, userNumber);
+  }
+
+  getStrikeCount(computerNumber, userNumber) {
+    return computerNumber.filter((number, index) => number === userNumber[index]).length;
+  }
+
+  getBallCount(computerNumber, userNumber) {
+    return computerNumber.filter((number, index) => userNumber.includes(number) && number !== userNumber[index]).length;
+  }
+
+  getStrikeAndBall(computerNumber, userNumber) {
+    const strikeCount = this.getStrikeCount(computerNumber, userNumber);
+    const ballCount = this.getBallCount(computerNumber, userNumber);
+
+    return { strikeCount: strikeCount, ballCount: ballCount };
+  }
+
   tryValidate(validate, input, readLine) {
     try {
       validate(input);
