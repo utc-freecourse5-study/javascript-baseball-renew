@@ -33,28 +33,22 @@ const expectLogContains = (received, logs) => {
   });
 };
 
-const runException = (answers) => {
+const runException = (inputs) => {
+  mockQuestions(inputs);
   const logSpy = getLogSpy();
-
-  const randoms = [1, 3, 5, 5, 8, 9];
-
-  mockRandoms(randoms);
-  mockQuestions(answers);
-
   const app = new App();
+
   app.play();
 
-  const log = getOutput(logSpy);
-
-  expectLogContains(log, ['[ERROR]']);
+  expectLogContains(getOutput(logSpy), ['[ERROR]']);
 };
 
 describe('숫자 야구 게임', () => {
   test('게임 종료 후 재시작', () => {
     const logSpy = getLogSpy();
 
-    const randoms = [1, 3, 5, 5, 8, 9];
-    const answers = ['246', '135', '1', '597', '589', '2'];
+    const randoms = [1, 3, 5];
+    const answers = ['246', '135', '2'];
 
     mockRandoms(randoms);
     mockQuestions(answers);
@@ -64,19 +58,8 @@ describe('숫자 야구 게임', () => {
 
     const log = getOutput(logSpy);
 
-    const messages = [
-      '낫싱',
-      '3스트라이크',
-      '시도한 횟수: 2번',
-      '1볼 1스트라이크',
-      '3스트라이크',
-      '시도한 횟수: 2번',
-    ];
+    const messages = ['낫싱', '3스트라이크', '시도한 횟수: 2번'];
 
     expectLogContains(log, messages);
-  });
-
-  test('예외 테스트', () => {
-    runException(['a']);
   });
 });
