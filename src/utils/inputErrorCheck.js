@@ -1,11 +1,12 @@
 const { Console } = require('@woowacourse/mission-utils');
 
-const errorCheckFor = (inputFn, beforePlayFn) => {
+const errorCheckFor = (exceptionInstance) => {
   try {
-    inputFn();
+    exceptionInstance.validate();
+    return true;
   } catch (error) {
     Console.print(error.message);
-    beforePlayFn();
+    return false;
   }
 };
 

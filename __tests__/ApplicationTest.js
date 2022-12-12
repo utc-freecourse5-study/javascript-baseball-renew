@@ -33,14 +33,20 @@ const expectLogContains = (received, logs) => {
   });
 };
 
-const runException = (inputs) => {
-  mockQuestions(inputs);
+const runException = (answers) => {
   const logSpy = getLogSpy();
-  const app = new App();
 
+  const randoms = [1, 3, 5, 5, 8, 9];
+
+  mockRandoms(randoms);
+  mockQuestions(answers);
+
+  const app = new App();
   app.play();
 
-  expectLogContains(getOutput(logSpy), ['[ERROR]']);
+  const log = getOutput(logSpy);
+
+  expectLogContains(log, ['[ERROR]']);
 };
 
 describe('숫자 야구 게임', () => {

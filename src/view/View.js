@@ -28,43 +28,30 @@ class View {
     }
   }
 
-  #validateBaseballNumberLogic(input) {
-    const baseBallInputException = new BaseBallInputException(input);
-    baseBallInputException.validate();
-
-    this.#controller.inputNumber(input);
-    OutputView.printGuessResult(this.#controller);
-
-    this.#strikeOutEvent(this.#controller.outputGuess());
-  }
-
   #requestBaseballNumberEvent(input) {
-    errorCheckFor(
-      () => this.#validateBaseballNumberLogic(input),
-      () => this.requestBaseballNumber()
-    );
+    if (!errorCheckFor(new BaseBallInputException(input))) {
+      this.requestBaseballNumber();
+    } else {
+      this.#controller.inputNumber(input);
+      OutputView.printGuessResult(this.#controller);
+
+      this.#strikeOutEvent(this.#controller.outputGuess());
+    }
   }
 
   requestBaseballNumber() {
     InputView.readBaseBallNumbers(this.#requestBaseballNumberEvent.bind(this));
   }
 
-  #validateGameCommandLogic(input) {
-    const gameCommandException = new GameCommandException(input);
-    gameCommandException.validate();
+  #requestGameCommandEvent(input) {
+    if (!errorCheckFor(new GameCommandException(input)))
+      this.requestGameCommand();
     if (input === '1') {
       this.start();
       this.requestBaseballNumber();
     } else {
       Console.close();
     }
-  }
-
-  #requestGameCommandEvent(input) {
-    errorCheckFor(
-      () => this.#validateGameCommandLogic(input),
-      () => this.requestGameCommandEvent()
-    );
   }
 
   requestGameCommand() {
